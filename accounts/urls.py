@@ -15,5 +15,7 @@ urlpatterns = [
     path('accounts/usersDetail' , usersDetail , name="usersDetail"),
     path('accounts/delete' , delete_user , name="delete_user"),
     # path('accounts/modify' , modify_user , name="modify_user"),                                                                                                                                                                                 
+    path('contact/', contact, name='contact'),
+
 
 ]

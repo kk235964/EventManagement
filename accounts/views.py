@@ -19,13 +19,16 @@ from noticeBoard.models import AdminNotice
 def home(request):
 
     events = Event.objects.all()
-    context = {'events': events}
+    articles= Article.objects.all()
+    context = {'events': events , 'articles':articles}
     # return render(request , 'dashboard.html',context)
     quant = User.objects.all().count()
     content = AdminNotice.objects.all().order_by ('id') [1:4]
     size = AdminNotice.objects.all().count()
     art = Article.objects.all().count()
     return render(request , 'dashboard.html',{'conts': content, 'num': size,**context, 'list': quant , 'article_count': art})
+    
+   
 
 
 def user_list(request):
@@ -168,3 +171,6 @@ def send_mail_after_registration(email , token):
     recipient_list = [email]
     send_mail(subject, message , email_from ,recipient_list )
     
+
+def contact(request):
+    return render(request , 'base/contact.html')
