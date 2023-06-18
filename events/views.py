@@ -143,4 +143,4 @@ def participant_registered_events(request):
         return render(request, 'registered_event.html', context)
     except Participant.DoesNotExist:
         # Handle the case when the participant does not exist
-        return HttpResponse("no events")
+        return HttpResponse("no events") 
