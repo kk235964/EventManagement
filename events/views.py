@@ -112,12 +112,19 @@ def search_event(request):
         return HttpResponse(f"An error occurred: {e}")
 
 def register_participant(request):
+<<<<<<< HEAD
     if request.method == "POST":
         logged_in_user = request.user
         username = logged_in_user.username
         email = logged_in_user.email
         participant = Participant(name = username, email = email)
         participant.save()
+=======
+    if request.user.is_authenticated:
+        logged_in_user = request.user
+        username = logged_in_user.username
+        email = logged_in_user.email
+>>>>>>> b0d676041270c6fb268dc7971457b2f3fb579b1d
         context = {
             'username': username,
             'email': email
@@ -128,11 +135,30 @@ def register_participant(request):
         prts = Participant.objects.all()
         events = Event.objects.all()
         # If the request method is not POST, render the template with the modal
+<<<<<<< HEAD
         return render(request, 'events.html',{'memb':prts,'events':events})
+=======
+        return render(request, 'events.html')
+>>>>>>> b0d676041270c6fb268dc7971457b2f3fb579b1d
     
 
 @login_required
 def participant_registered_events(request):
+<<<<<<< HEAD
 
        return render(request, 'registered_event.html')
     
+=======
+    try:
+        participant = Participant.objects.get(name=request.user.username)
+        registered_events = participant.registered_events.all()
+
+        context = {
+            'registered_events': registered_events
+        }
+
+        return render(request, 'registered_event.html', context)
+    except Participant.DoesNotExist:
+        # Handle the case when the participant does not exist
+        return HttpResponse("no events")
+>>>>>>> b0d676041270c6fb268dc7971457b2f3fb579b1d
