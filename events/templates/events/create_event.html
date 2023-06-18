@@ -245,10 +245,9 @@
 						<h2>Manage <b>Your Events</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Download Events list</span></a>
+						<a href="{% url 'event_list' %}" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Download Events list</span></a>
 						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Event</span></a>
-						<a href="/events" class="btn btn-success"><span>Back</span></a>
-											
+						<a href="/events" class="btn btn-success"><span>Back</span></a>				
 					</div>
                 </div>
             </div>
@@ -272,7 +271,7 @@
                 <tbody>
 					
 					{% for event in events %}
-					{% if request.user.username == event.event_createdby %}
+					
                     <tr>
 						<td>
 							<span class="custom-checkbox">
@@ -290,12 +289,12 @@
                             <a href="#deleteEmployeeModal-{{forloop.counter}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                         </td>
                     </tr>
-					{% endif %}
+					
                      {% endfor %}
                 </tbody>
             </table>
 			<div class="clearfix">
-                <div class="hint-text">Showing <b>{{ events.count }}
+                <div class="hint-text">Showing <b>{{ count }}
 				{% comment %} </b> out of <b>25</b>  {% endcomment %}
 				entries</div>
                 {% comment %} <ul class="pagination">

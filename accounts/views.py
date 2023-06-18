@@ -104,9 +104,9 @@ def login_attempt(request):
         
         profile_obj = Profile.objects.filter(user = user_obj ).first()
 
-        if not profile_obj.is_verified:
-            messages.success(request, 'Profile is not verified check your mail.')
-            return redirect('/accounts/login')
+        # if not profile_obj.is_verified:
+        #     messages.success(request, 'Profile is not verified check your mail.')
+        #     return redirect('/accounts/login')
 
         user = authenticate(username = username , password = password)
         if user is None:
@@ -164,16 +164,16 @@ def verify(request , auth_token):
         profile_obj = Profile.objects.filter(auth_token = auth_token).first()
     
 
-        if profile_obj:
-            if profile_obj.is_verified:
-                messages.success(request, 'Your account is already verified.')
-                return redirect('/accounts/login')
-            profile_obj.is_verified = True
-            profile_obj.save()
-            messages.success(request, 'Your account has been verified.')
-            return redirect('/accounts/login')
-        else:
-            return redirect('/error')
+        # if profile_obj:
+            # if profile_obj.is_verified:
+            #     messages.success(request, 'Your account is already verified.')
+            #     return redirect('/accounts/login')
+            # profile_obj.is_verified = True
+            # profile_obj.save()
+            # messages.success(request, 'Your account has been verified.')
+            # return redirect('/accounts/login')
+        # else:
+        #     return redirect('/error')
     except Exception as e:
         print(e)
         return redirect('/')

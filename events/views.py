@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from datetime import datetime
+import csv
 from events.models import Event,Participant
 from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
@@ -13,6 +14,19 @@ def event(request):
         return render(request, 'events.html', context)
     except Exception as e:
         return HttpResponse(f"An error occurred: {e}")
+    
+def event_list(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="Event_List.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Event Name', 'Organiser', 'No. of Participants'])
+
+    events = Event.objects.all()
+    for event in events:
+       
+            writer.writerow([event.event_name, event.event_createdby,event.participants])
+    return response
 
 def eventpost(request, id):
     try:
@@ -25,7 +39,8 @@ def eventpost(request, id):
 def create_event(request):
     try:
         events = Event.objects.all()
-        context = {'events': events}
+        size = events.count()
+        context = {'events': events,'count':size}
         return render(request, 'create_event.html', context)
     except Exception as e:
         return HttpResponse(f"An error occurred: {e}")
@@ -52,6 +67,7 @@ def ADD_event(request):
 def Edit_event(request):
     try:
         events = Event.objects.all()
+       
         context = {'events': events}
         return redirect(request, 'create_event', context)
     except Exception as e:
