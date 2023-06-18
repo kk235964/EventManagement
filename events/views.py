@@ -112,10 +112,12 @@ def search_event(request):
         return HttpResponse(f"An error occurred: {e}")
 
 def register_participant(request):
-    if request.user.is_authenticated:
+    if request.method == "POST":
         logged_in_user = request.user
         username = logged_in_user.username
         email = logged_in_user.email
+        participant = Participant(name = username, email = email)
+        participant.save()
         context = {
             'username': username,
             'email': email
@@ -123,8 +125,10 @@ def register_participant(request):
         return render(request,'registered_event.html',context)
 
     else:
+        prts = Participant.objects.all()
+        events = Event.objects.all()
         # If the request method is not POST, render the template with the modal
-        return render(request, 'events.html')
+        return render(request, 'events.html',{'memb':prts,'events':events})
     
 
 @login_required
